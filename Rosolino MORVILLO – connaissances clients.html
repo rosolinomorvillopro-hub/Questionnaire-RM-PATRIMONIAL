@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RM PATRIMONIAL — Questionnaire connaissances clients</title>
+<style>
+  :root{
+    --bg:#000000;
+    --bg-elevated:#131313;
+    --bg-elevated-2:#1B1B1B;
+    --gold:#C9A227;
+    --gold-light:#E4C978;
+    --white:#FFFFFF;
+    --text-soft:#B9B9B9;
+    --line:rgba(255,255,255,0.14);
+    --line-soft:rgba(255,255,255,0.09);
+    --error-bg:#2A1212;
+    --error-border:#8C3A32;
+    --error-text:#FF8A80;
+    --radius:10px;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--white);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:16px;
+    line-height:1.55;
+    -webkit-text-size-adjust:100%;
+    text-size-adjust:100%;
+  }
+
+  a{color:var(--gold-light);}
+
+  .top-bar{
+    background:#000000;
+    color:var(--gold-light);
+    padding:10px 20px;
+    font-size:13px;
+    letter-spacing:.04em;
+    text-align:center;
+    border-bottom:1px solid var(--line-soft);
+  }
+
+  header.masthead{
+    background:#000000;
+    color:var(--white);
+    padding:44px 20px 40px;
+    border-bottom:1px solid var(--line-soft);
+  }
+
+  .masthead-inner{
+    max-width:720px;
+    margin:0 auto;
+  }
+
+  .brand-row{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-bottom:22px;
+  }
+
+  .brand-mark{
+    width:52px;height:52px;
+    flex:0 0 auto;
+    border:1.5px solid var(--gold);
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:Georgia,'Iowan Old Style','Times New Roman',serif;
+    font-size:19px;
+    letter-spacing:.03em;
+    color:var(--gold-light);
+  }
+
+  .brand-name{
+    font-family:Georgia,'Iowan Old Style','Times New Roman',serif;
+    font-size:15px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--gold);
+  }
+  .brand-sub{
+    font-size:12.5px;
+    color:var(--gold-light);
+    margin-top:2px;
+  }
+
+  h1{
+    font-family:Georgia,'Iowan Old Style','Times New Roman',serif;
+    font-weight:400;
+    font-size:26px;
+    line-height:1.35;
+    margin:0 0 12px;
+    color:var(--white);
+  }
+
+  header.masthead p{
+    color:var(--text-soft);
+    font-size:15px;
+    max-width:56ch;
+    margin:0;
+  }
+
+  main{
+    max-width:720px;
+    margin:0 auto;
+    padding:32px 20px 60px;
+  }
+
+  .card{
+    background:var(--bg-elevated);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:26px 24px;
+    margin-bottom:20px;
+  }
+
+  .card h2{
+    font-family:Georgia,'Iowan Old Style','Times New Roman',serif;
+    font-weight:400;
+    font-size:18px;
+    margin:0 0 4px;
+    color:var(--white);
+  }
+  .card .eyebrow{
+    font-size:11.5px;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-weight:600;
+    margin:0 0 6px;
+  }
+  .card .helper{
+    font-size:13.5px;
+    color:var(--text-soft);
+    margin:0 0 18px;
+  }
+
+  .field-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+
+  .field{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .field.full{grid-column:1 / -1;}
+
+  label{
+    font-size:13.5px;
+    font-weight:600;
+    color:var(--white);
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  textarea{
+    font-size:16px; /* anti-zoom iOS */
+    font-family:inherit;
+    padding:11px 12px;
+    border:1px solid var(--line);
+    border-radius:8px;
+    background:var(--bg-elevated-2);
+    color:var(--white);
+    width:100%;
+  }
+  input::placeholder,textarea::placeholder{
+    color:#7A7A7A;
+  }
+  input:focus,textarea:focus{
+    outline:2px solid var(--gold);
+    outline-offset:1px;
+    border-color:var(--gold);
+  }
+
+  textarea{
+    resize:vertical;
+    min-height:100px;
+  }
+
+  .contact-note{
+    font-size:12.5px;
+    color:var(--text-soft);
+    margin-top:14px;
+    padding-top:14px;
+    border-top:1px dashed var(--line);
+  }
+
+  fieldset{
+    border:none;
+    margin:0;
+    padding:0;
+  }
+  legend{padding:0;width:100%;}
+
+  .options{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-top:4px;
+  }
+
+  .option{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    padding:12px 14px;
+    border:1px solid var(--line);
+    border-radius:8px;
+    background:var(--bg-elevated-2);
+    cursor:pointer;
+    transition:border-color .15s ease,background .15s ease;
+  }
+  .option:hover{
+    border-color:var(--gold);
+  }
+  .option input[type="radio"]{
+    margin-top:3px;
+    accent-color:var(--gold);
+    width:17px;height:17px;
+    flex:0 0 auto;
+  }
+  .option span{
+    font-size:14.5px;
+    color:var(--white);
+  }
+  .option:has(input:checked){
+    border-color:var(--gold);
+    background:rgba(201,162,39,0.14);
+  }
+
+  .q-number{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:26px;height:26px;
+    border-radius:50%;
+    background:var(--gold);
+    color:#000000;
+    font-family:Georgia,serif;
+    font-size:13px;
+    font-weight:700;
+    margin-right:8px;
+    flex:0 0 auto;
+  }
+
+  .q-title{
+    display:flex;
+    align-items:flex-start;
+    margin-bottom:14px;
+  }
+  .q-title h2{margin:0;font-size:16.5px;line-height:1.4;}
+
+  .submit-zone{
+    text-align:center;
+    padding:8px 4px 0;
+  }
+
+  button.submit-btn{
+    background:var(--gold);
+    color:#000000;
+    border:none;
+    padding:15px 34px;
+    font-size:15.5px;
+    font-weight:700;
+    letter-spacing:.02em;
+    border-radius:8px;
+    cursor:pointer;
+    width:100%;
+  }
+  button.submit-btn:hover{background:var(--gold-light);}
+  button.submit-btn:focus-visible{
+    outline:2px solid var(--white);
+    outline-offset:2px;
+  }
+
+  .error-banner{
+    display:none;
+    background:var(--error-bg);
+    border:1px solid var(--error-border);
+    color:var(--error-text);
+    padding:12px 14px;
+    border-radius:8px;
+    font-size:13.5px;
+    margin-bottom:18px;
+    font-weight:600;
+  }
+  .error-banner.show{display:block;}
+
+  footer{
+    background:#000000;
+    color:var(--gold-light);
+    padding:26px 20px 30px;
+    font-size:12.5px;
+    text-align:center;
+    line-height:1.7;
+    border-top:1px solid var(--line-soft);
+  }
+  footer strong{color:var(--gold);font-weight:700;}
+  footer a{color:var(--gold);text-decoration:none;}
+
+  @media (max-width:560px){
+    .field-grid{grid-template-columns:1fr;}
+    header.masthead{padding:34px 18px 30px;}
+    h1{font-size:22px;}
+    .card{padding:22px 18px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">RM PATRIMONIAL — Conseils &amp; Assurances</div>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="brand-row">
+      <div class="brand-mark">RM</div>
+      <div>
+        <div class="brand-name">RM Patrimonial</div>
+        <div class="brand-sub">Rosolino Morvillo — Conseils &amp; Assurances</div>
+      </div>
+    </div>
+    <h1>Questionnaire connaissances &amp; attentes patrimoniales</h1>
+    <p>Ce court questionnaire nous permet de mieux comprendre votre niveau de connaissance en gestion de patrimoine ainsi que vos attentes, afin de vous accompagner de la façon la plus pertinente possible.</p>
+  </div>
+</header>
+
+<main>
+  <form id="quizForm" novalidate>
+
+    <div class="error-banner" id="errorBanner">
+      Merci de renseigner votre prénom, nom, e-mail et téléphone afin que nous puissions vous recontacter.
+    </div>
+
+    <!-- Coordonnées -->
+    <section class="card">
+      <p class="eyebrow">Vos coordonnées</p>
+      <h2>Qui êtes-vous ?</h2>
+      <p class="helper">Les coordonnées sont obligatoires.</p>
+      <div class="field-grid">
+        <div class="field">
+          <label for="prenom">Prénom *</label>
+          <input type="text" id="prenom" name="prenom" autocomplete="given-name" required>
+        </div>
+        <div class="field">
+          <label for="nom">Nom *</label>
+          <input type="text" id="nom" name="nom" autocomplete="family-name" required>
+        </div>
+        <div class="field">
+          <label for="email">E-mail *</label>
+          <input type="email" id="email" name="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="telephone">Téléphone *</label>
+          <input type="tel" id="telephone" name="telephone" autocomplete="tel" required>
+        </div>
+      </div>
+      <p class="contact-note">Ces informations ne seront utilisées que pour vous recontacter dans le cadre de votre demande.</p>
+    </section>
+
+    <!-- Question 1 -->
+    <section class="card">
+      <fieldset>
+        <legend>
+          <div class="q-title">
+            <span class="q-number">1</span>
+            <h2>Selon vous, quel est le principal objectif d'une bonne gestion de patrimoine ?</h2>
+          </div>
+        </legend>
+        <div class="options">
+          <label class="option">
+            <input type="radio" name="q1" value="Obtenir le rendement le plus élevé possible">
+            <span>Obtenir le rendement le plus élevé possible</span>
+          </label>
+          <label class="option">
+            <input type="radio" name="q1" value="Atteindre ses objectifs de vie en optimisant son patrimoine selon sa situation">
+            <span>Atteindre ses objectifs de vie en optimisant son patrimoine selon sa situation</span>
+          </label>
+          <label class="option">
+            <input type="radio" name="q1" value="Investir uniquement dans l'immobilier">
+            <span>Investir uniquement dans l'immobilier</span>
+          </label>
+        </div>
+      </fieldset>
+    </section>
+
+    <!-- Question 2 -->
+    <section class="card">
+      <fieldset>
+        <legend>
+          <div class="q-title">
+            <span class="q-number">2</span>
+            <h2>À partir de quel niveau de revenus ou de patrimoine est-il utile de consulter un conseiller en gestion de patrimoine ?</h2>
+          </div>
+        </legend>
+        <div class="options">
+          <label class="option">
+            <input type="radio" name="q2" value="À partir de 500 000€ de patrimoine">
+            <span>À partir de 500 000€ de patrimoine</span>
+          </label>
+          <label class="option">
+            <input type="radio" name="q2" value="À partir de 100 000€ d'épargne">
+            <span>À partir de 100 000€ d'épargne</span>
+          </label>
+          <label class="option">
+            <input type="radio" name="q2" value="À tout moment, dès lors que l'on souhaite prendre de meilleures décisions financières">
+            <span>À tout moment, dès lors que l'on souhaite prendre de meilleures décisions financières</span>
+          </label>
+        </div>
+      </fieldset>
+    </section>
+
+    <!-- Question 3 -->
+    <section class="card">
+      <fieldset>
+        <legend>
+          <div class="q-title">
+            <span class="q-number">3</span>
+            <h2>Selon vous, quelle est la meilleure façon de limiter le risque d'un investissement ?</h2>
+          </div>
+        </legend>
+        <div class="options">
+          <label class="option">
+            <input type="radio" name="q3" value="Investir tout son capital sur le placement le plus rentable">
+            <span>Investir tout son capital sur le placement le plus rentable</span>
+          </label>
+          <label class="option">
+            <input type="radio" name="q3" value="Diversifier ses investissements">
+            <span>Diversifier ses investissements</span>
+          </label>
+          <label class="option">
+            <input type="radio" name="q3" value="Garder tout son argent sur un compte courant">
+            <span>Garder tout son argent sur un compte courant</span>
+          </label>
+        </div>
+      </fieldset>
+    </section>
+
+    <!-- Question 4 -->
+    <section class="card">
+      <fieldset>
+        <legend>
+          <div class="q-title">
+            <span class="q-number">4</span>
+            <h2>Parmi ces sujets, lequel aimeriez-vous le plus optimiser ?</h2>
+          </div>
+        </legend>
+        <div class="options">
+          <label class="option">
+            <input type="radio" name="q4" value="Réduire ma fiscalité">
+            <span>Réduire ma fiscalité</span>
+          </label>
+          <label class="option">
+            <input type="radio" name="q4" value="Préparer ma retraite">
+            <span>Préparer ma retraite</span>
+          </label>
+          <label class="option">
+            <input type="radio" name="q4" value="Les deux, car une stratégie patrimoniale globale permet d'agir sur plusieurs objectifs">
+            <span>Les deux, car une stratégie patrimoniale globale permet d'agir sur plusieurs objectifs</span>
+          </label>
+        </div>
+      </fieldset>
+    </section>
+
+    <!-- Question 5 -->
+    <section class="card">
+      <fieldset>
+        <legend>
+          <div class="q-title">
+            <span class="q-number">5</span>
+            <h2>Pensez-vous que votre stratégie patrimoniale actuelle est optimisée ?</h2>
+          </div>
+        </legend>
+        <div class="options">
+          <label class="option">
+            <input type="radio" name="q5" value="Oui, j'en suis certain(e)">
+            <span>Oui, j'en suis certain(e)</span>
+          </label>
+          <label class="option">
+            <input type="radio" name="q5" value="Je ne sais pas">
+            <span>Je ne sais pas</span>
+          </label>
+          <label class="option">
+            <input type="radio" name="q5" value="Je pense qu'un regard extérieur pourrait me permettre de le vérifier">
+            <span>Je pense qu'un regard extérieur pourrait me permettre de le vérifier</span>
+          </label>
+        </div>
+      </fieldset>
+    </section>
+
+    <!-- Message libre -->
+    <section class="card">
+      <p class="eyebrow">Facultatif</p>
+      <h2>Un message à me transmettre ?</h2>
+      <p class="helper">Par exemple : « Je souhaite être contacté(e) ».</p>
+      <div class="field full">
+        <textarea id="message" name="message" placeholder="Votre message..."></textarea>
+      </div>
+    </section>
+
+    <div class="submit-zone">
+      <button type="submit" class="submit-btn">Envoyer mes réponses</button>
+    </div>
+
+  </form>
+</main>
+
+<footer>
+  <div><strong>SASU RM PATRIMONIAL</strong> — Conseils &amp; Assurances</div>
+  <div>66 rue Gambetta, 92150 Suresnes</div>
+  <div><a href="mailto:Rmorvillo@rm-patrimonial.com">Rmorvillo@rm-patrimonial.com</a> — 07 60 03 30 07</div>
+</footer>
+
+<script>
+(function(){
+  var form = document.getElementById('quizForm');
+  var errorBanner = document.getElementById('errorBanner');
+  var CAMPAGNE = "RM PATRIMONIAL – QUESTIONNAIRE";
+  var DEST_EMAIL = "Rmorvillo@rm-patrimonial.com";
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    var prenom = document.getElementById('prenom').value.trim();
+    var nom = document.getElementById('nom').value.trim();
+    var email = document.getElementById('email').value.trim();
+    var telephone = document.getElementById('telephone').value.trim();
+    var message = document.getElementById('message').value.trim();
+
+    if(!prenom || !nom || !email || !telephone){
+      errorBanner.classList.add('show');
+      errorBanner.scrollIntoView({behavior:'smooth', block:'center'});
+      return;
+    }
+    errorBanner.classList.remove('show');
+
+    function getAnswer(name){
+      var el = form.querySelector('input[name="'+name+'"]:checked');
+      return el ? el.value : "(sans réponse)";
+    }
+
+    var q1 = getAnswer('q1');
+    var q2 = getAnswer('q2');
+    var q3 = getAnswer('q3');
+    var q4 = getAnswer('q4');
+    var q5 = getAnswer('q5');
+
+    var lines = [];
+    lines.push("Campagne : " + CAMPAGNE);
+    lines.push("");
+    lines.push("— Coordonnées —");
+    lines.push("Prénom : " + (prenom || "(non renseigné)"));
+    lines.push("Nom : " + (nom || "(non renseigné)"));
+    lines.push("E-mail : " + (email || "(non renseigné)"));
+    lines.push("Téléphone : " + (telephone || "(non renseigné)"));
+    lines.push("");
+    lines.push("— Réponses —");
+    lines.push("1. Objectif d'une bonne gestion de patrimoine : " + q1);
+    lines.push("2. Niveau utile pour consulter un conseiller : " + q2);
+    lines.push("3. Meilleure façon de limiter le risque : " + q3);
+    lines.push("4. Sujet à optimiser en priorité : " + q4);
+    lines.push("5. Stratégie patrimoniale actuelle optimisée : " + q5);
+    lines.push("");
+    lines.push("— Message libre —");
+    lines.push(message || "(aucun message)");
+
+    var subject = "Questionnaire patrimonial — " + (prenom || nom || email || telephone);
+    var body = lines.join("\r\n");
+
+    var mailtoUrl = "mailto:" + encodeURIComponent(DEST_EMAIL)
+      + "?subject=" + encodeURIComponent(subject)
+      + "&body=" + encodeURIComponent(body);
+
+    window.location.href = mailtoUrl;
+  });
+})();
+</script>
+
+</body>
+</html>
